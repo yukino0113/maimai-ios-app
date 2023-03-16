@@ -6,8 +6,22 @@
 //
 
 import Foundation
-
 import WebKit
+
+
+private var account: String?
+private var password: String?
+
+func loadAccountFile(){
+    guard let path = Bundle.main.path(forResource: "Account", ofType: "plist"),
+          let xml = FileManager.default.contents(atPath: path),
+          let plist = try? PropertyListSerialization.propertyList(from: xml, options: .mutableContainersAndLeaves, format: nil) as? [String: Any] else {
+        fatalError("Could not load configuration file")
+    }
+    account = plist["userID"] as? String
+    password = plist["password"] as? String
+}
+
 
 func loginScript(webView: WKWebView){
     
@@ -19,6 +33,9 @@ func loginScript(webView: WKWebView){
      
     **/
     
+    // Load the account settings first
+    loadAccountFile()
+    
     // find and scroll to the segaID button and cilck it to show the input box
     webView.evaluateJavaScript(
     """
@@ -28,20 +45,9 @@ func loginScript(webView: WKWebView){
     """)
     
     // input the account and password
-    webView.evaluateJavaScript(
-    """
-            var accountInput = document.querySelector('[name="sid"]');
-            accountInput.value = "123";
-                            
-            var passwordInput = document.querySelector('[name="password"]');
-            passwordInput.value = "123";
-    """)
+    webView.evaluateJavaScript("document.querySelector('[name=\"sid\"]').value = \"\(account!)\";")
+    webView.evaluateJavaScript("document.querySelector('[name=\"password\"]').value = \"\(password!)\";")
     
     // press login
-    webView.evaluateJavaScript(
-    """
-            var loginPress = document
-            loginPress.click();
-    """
-    )
+    webView.evaluateJavaScript("document.querySelector('#btnSubmit').click();")
 }
