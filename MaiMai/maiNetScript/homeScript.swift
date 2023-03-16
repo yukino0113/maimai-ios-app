@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import WebKit
 
 func homeScript(webView: WKWebView){
     
