@@ -8,10 +8,11 @@
 import Foundation
 import WebKit
 
-
 private var account: String?
 private var password: String?
 
+/// Use to get account information from account plist file.
+/// File Path : MaiMai/UserData
 func loadAccountFile(){
     guard let path = Bundle.main.path(forResource: "Account", ofType: "plist"),
           let xml = FileManager.default.contents(atPath: path),
@@ -23,15 +24,9 @@ func loadAccountFile(){
 }
 
 
+/// Used for logging in to the MaiMai DX Global Version via SegaID.
+/// - Parameter webView: The current using WebView
 func loginScript(webView: WKWebView){
-    
-    /**
-    Used for logging in to the MaiMai DX Global Version via SegaID.
-     
-     - Parameters:
-        webView: the current using WebView
-     
-    **/
     
     // Load the account settings first
     loadAccountFile()
