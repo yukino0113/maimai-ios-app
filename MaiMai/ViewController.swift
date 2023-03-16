@@ -28,10 +28,14 @@ class ViewController: UIViewController, WKNavigationDelegate {
         
         let url = webView.url!.absoluteString
         
-        if url.contains("https://lng-tgk-aime-gw.am-all.net"){
-            loginScript(webView: webView)
-        }else if (url == "https://maimaidx-eng.com/maimai-mobile/home/"){
-            homeScript(webView: webView)
+        if !webView.isLoading{
+            
+            if url.contains("https://lng-tgk-aime-gw.am-all.net"){
+                loginScript(webView: webView)
+                
+            }else if (url == "https://maimaidx-eng.com/maimai-mobile/home/"){
+                homeScript(webView: webView).runHomeScript()
+            }
         }
     }
         
