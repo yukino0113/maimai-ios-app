@@ -8,7 +8,6 @@
 import Foundation
 import WebKit
 
-
 private var account: String?
 private var password: String?
 
