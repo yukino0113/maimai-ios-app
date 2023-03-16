@@ -25,6 +25,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
     
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        
         let url = webView.url!.absoluteString
         
         if url.contains("https://lng-tgk-aime-gw.am-all.net"){
