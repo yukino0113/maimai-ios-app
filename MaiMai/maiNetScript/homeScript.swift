@@ -40,6 +40,7 @@ func homeScript(webView: WKWebView){
      By attribute: ('[attribute="value"]') (e.g. '[name="username"]', '[data-id="123"]', etc.)
      */
     
+    
     webView.evaluateJavaScript("document.querySelector('.name_block.f_l.f_16').innerText") { (result, error) in
         let name = result as? String
         try? writeValueToPlistFile(forKey: "playerID", value: name!)
@@ -50,47 +51,40 @@ func homeScript(webView: WKWebView){
         try? writeValueToPlistFile(forKey: "title", value: title!)
     }
     
-    webView.evaluateJavaScript("document.querySelector('.rating_block').innerText") { (result, error) in
-        let rating = result as? String
-        try? writeValueToPlistFile(forKey: "rating", value: rating!)
+    webView.evaluateJavaScript("document.querySelector('.p_3.t_c.f_0').getAttribute('class')") { (result, error) in
+        guard let titleColor = result as? String else { return }
+        let color: String
         
-        if let ratingInt = Int(rating!) {
-            let ratingColor: String
-            
-            switch ratingInt {
-            case ..<1000:
-                ratingColor = "white"
-            case ..<2000:
-                ratingColor = "blue"
-            case ..<4000:
-                ratingColor = "green"
-            case ..<7000:
-                ratingColor = "yellow"
-            case ..<10000:
-                ratingColor = "red"
-            case ..<12000:
-                ratingColor = "purple"
-            case ..<13000:
-                ratingColor = "bronze"
-            case ..<14000:
-                ratingColor = "silver"
-            case ..<14500:
-                ratingColor = "gold"
-            case ..<15000:
-                ratingColor = "platinum"
-            default:
-                ratingColor = "rainbow"
-            }
-            
-            try? writeValueToPlistFile(forKey: "ratingColor", value: ratingColor)
+        switch true {
+        case titleColor.contains("Normal"):
+            color = "white"
+        case titleColor.contains("Bronze"):
+            color = "bronze"
+        case titleColor.contains("Silver"):
+            color = "silver"
+        case titleColor.contains("Gold"):
+            color = "gold"
+        default:
+            color = "rainbow"
         }
         
+        try? writeValueToPlistFile(forKey: "titleColor", value: color)
+    }
+
+    
+    webView.evaluateJavaScript("document.querySelector('.h_30.f_r').getAttribute('src')"){ (result, error) in
+        if let url = result as? String,
+           let range = url.range(of: "rating_base_(.*?)\\.png", options: .regularExpression) {
+            let color = String(url[range].dropFirst("rating_base_".count).dropLast(".png".count))
+            try? writeValueToPlistFile(forKey: "rating", value: color)
+        }
+    }
+    
+    
         /**
         - ToDo:
-         title color
          dan
          grade
          */
         
-    }
 }
