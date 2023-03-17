@@ -82,7 +82,6 @@ class homeScript: NSObject, WKNavigationDelegate{
             }
             
             try? self.writeValueToPlistFile(forKey: "titleColor", value: color)
-            print(color)
         }
     }
     
