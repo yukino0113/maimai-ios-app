@@ -12,6 +12,8 @@ import SideMenu
 class MenuViewController: UIViewController{
     
     private var sideMenu: SideMenuNavigationController?
+    private let profileXFloat = (UIScreen.main.bounds.width - profileWidth) / 2
+    private let profileYFloat = (UIScreen.main.bounds.height / 8 * 3) - profileHeight
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +21,9 @@ class MenuViewController: UIViewController{
         menuButtonSetup()
         sideMenuSetup()
         logoSetup()
+        profileFrame()
         titleSetup()
+        ratingSetup()
         
     }
 
@@ -59,7 +63,44 @@ class MenuViewController: UIViewController{
         sideMenu?.presentationStyle = .menuSlideIn
     }
     
+    private func profileFrame(){
+        
+        let profileWidth = UIScreen.main.bounds.width * 0.9
+        let profileHeight = UIScreen.main.bounds.height * 0.13
+        
+        let frameShadow = UIView(frame: CGRect(x: profileXFloat + 1,
+                                               y: profileYFloat + 3,
+                                               width: profileWidth,
+                                               height: profileHeight))
+        frameShadow.backgroundColor = .gray
+        frameShadow.layer.cornerRadius = 5
+        
+        let frame = UIView(frame: CGRect(x: profileXFloat,
+                                         y: profileYFloat,
+                                         width: profileWidth,
+                                         height: profileHeight))
+        frame.backgroundColor = .white
+        frame.layer.cornerRadius = 5
+        
+
+        view.addSubview(frameShadow)
+        view.addSubview(frame)
+    }
+    
+    private func iconSetup(){
+        
+        let profileWidth = UIScreen.main.bounds.width * 0.9
+        let profileHeight = UIScreen.main.bounds.height * 0.13
+        
+        let profileXFloat = (UIScreen.main.bounds.width - profileWidth) / 2
+        let profileYFloat = (UIScreen.main.bounds.height / 8 * 3) - profileHeight
+        
+    }
+    
     private func titleSetup(){
+        
+        // 296 * 86
+        
         let titleFrameWidthSize = UIScreen.main.bounds.width * 0.64
         let titleFrameHeightSize = titleFrameWidthSize * 0.093
         
@@ -95,6 +136,44 @@ class MenuViewController: UIViewController{
         title.textColor = .black
         title.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         view.addSubview(title)
+    }
+    
+    private func ratingSetup(){
+        let ratingFrameWidthSize = UIScreen.main.bounds.width * 0.64
+        let ratingFrameHeightSize = ratingFrameWidthSize * 0.093
+        
+        let ratingFrameXFloat = 100.0
+        let ratingFrameYFloat = 500.0
+        
+        let ratingFrame = UIButton(type: .custom)
+        ratingFrame.frame = CGRect(x: ratingFrameXFloat,
+                                  y: ratingFrameYFloat,
+                                  width: ratingFrameWidthSize,
+                                  height: ratingFrameHeightSize)
+        ratingFrame.setImage(UIImage(
+            named:  "rating" + readValueFromPlist(forKey: "ratingColor")!.capitalized),
+            for: .normal)
+        
+        ratingFrame.imageView?.contentMode = .scaleAspectFit
+        ratingFrame.contentHorizontalAlignment = .fill
+        ratingFrame.contentVerticalAlignment = .fill
+        
+        view.addSubview(ratingFrame)
+        
+        let ratingWidthSize = UIScreen.main.bounds.width * 0.64
+        let ratingHeightSize = ratingWidthSize * 0.093
+        
+        let ratingXFloat = 140.0
+        let ratingYFloat = 500.0
+        
+        let rating = UILabel(frame: CGRect(x: ratingXFloat,
+                                          y: ratingYFloat,
+                                          width: ratingWidthSize,
+                                          height: ratingHeightSize))
+        rating.text = readValueFromPlist(forKey: "rating")
+        rating.textColor = .white
+        rating.font = UIFont.systemFont(ofSize: 22, weight: .bold)
+        view.addSubview(rating)
     }
     
     public func readValueFromPlist(forKey key: String) -> String? {
