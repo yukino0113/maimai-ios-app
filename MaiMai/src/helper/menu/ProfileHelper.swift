@@ -110,7 +110,7 @@ class ProfileHealper{
     
     private func name(){
         
-        let nameFrameWidthSize = profileWidth * 0.35
+        let nameFrameWidthSize = profileWidth * 0.36
         let nameFrameHeightSize = profileHeight * 0.2
         
         let nameFrameXFloat = profileXFloat + profileHeight
@@ -139,11 +139,11 @@ class ProfileHealper{
     
     private func rating(){
         
-        let ratingFrameWidthSize = profileWidth * 0.35 / 1.7
-        let ratingFrameHeightSize = profileHeight * 0.2
+        let ratingFrameWidthSize = profileWidth * 0.35 / 1.4
+        let ratingFrameHeightSize = profileHeight * 0.25
         
-        let ratingFrameXFloat = profileXFloat + profileHeight * 1.08 + profileWidth * 0.35
-        let ratingFrameYFloat = profileYFloat + profileHeight * 0.31
+        let ratingFrameXFloat = profileXFloat + profileHeight * 1.08 + profileWidth * 0.36
+        let ratingFrameYFloat = profileYFloat + profileHeight * 0.29
         
         let ratingFrame = UIButton(type: .custom)
         ratingFrame.frame = CGRect(x: ratingFrameXFloat,
