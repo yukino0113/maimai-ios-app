@@ -159,8 +159,8 @@ class ProfileHealper{
         let ratingWidthSize = UIScreen.main.bounds.width * 0.64
         let ratingHeightSize = ratingWidthSize * 0.093
         
-        let ratingXFloat = 140.0
-        let ratingYFloat = 500.0
+        let ratingXFloat = profileXFloat + profileHeight * 1.08 + profileWidth * 0.36
+        let ratingYFloat = profileYFloat + profileHeight * 0.29
         
         let rating = UILabel(frame: CGRect(x: ratingXFloat,
                                           y: ratingYFloat,
